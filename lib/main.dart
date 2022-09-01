@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lynx/intro_screens/intro_screen1.dart';
+
 import 'package:lynx/onboarding_screen.dart';
-import 'package:lynx/test.dart';
 
-void main() =>
-  runApp(const MyApp());
-
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -16,7 +13,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-      
         primarySwatch: Colors.blue,
       ),
       home: OnBoardingScreen(),
@@ -24,4 +20,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
