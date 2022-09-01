@@ -5,6 +5,7 @@ import 'package:lynx/intro_screens/intro_screen1.dart';
 import 'package:lynx/intro_screens/intro_screen2.dart';
 import 'package:lynx/intro_screens/intro_screen3.dart';
 import 'package:lynx/login_screen.dart';
+import 'package:lynx/main_page.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -65,7 +66,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
+                              builder: (context) => MainPage(),
                             )),
                         icon: Icon(
                           Icons.done,

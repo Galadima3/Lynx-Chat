@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "322115519424",
+    "project_id": "mylez-lynx-chat",
+    "storage_bucket": "mylez-lynx-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322115519424:android:10a648036b80874b863e25",
+        "android_client_info": {
+          "package_name": "com.example.lynx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322115519424-ulckfsvq5tn28l7t2ensks62s3fp9k3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAif_Bg6yX47gjNjMBSE2NXc2FpgM2KdX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322115519424-ulckfsvq5tn28l7t2ensks62s3fp9k3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,6 +19,25 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+    
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -30,10 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   //logo
                   Container(
-                      height: 250, child: Image.asset('images/flutter.png')),
+                      height: 230, child: Image.asset('images/flutter.png')),
                   //Hello Again
                   Text(
-                    'Hello Again! ',
+                    'Hello There! ',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
                   ),
                   SizedBox(
@@ -58,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 5.0),
                         child: TextField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.email),
                               hintText: 'Email',
@@ -67,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 23,
                   ),
                   //password
                   Padding(
@@ -81,18 +103,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 5.0),
                         child: TextField(
+                          controller: _passwordController,
                           obscureText: _isObscured,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.password),
-                              
                               suffixIcon: IconButton(
                                   icon: Icon(
                                     _isObscured
                                         ? Icons.visibility_off
                                         : Icons.visibility,
                                   ),
-                                  onPressed: _togglePasswordView
-                                  ),
+                                  onPressed: _togglePasswordView),
                               hintText: 'Password',
                               border: InputBorder.none),
                         ),
@@ -110,13 +131,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         fixedSize: Size(300, 69),
-                        primary: Colors.deepPurple,
-                        //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                        primary: Colors.blue,
                         textStyle: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
-                    onPressed: () {},
+                    onPressed: signIn,
                     child: Text('Sign In'),
                   ),
                   SizedBox(
