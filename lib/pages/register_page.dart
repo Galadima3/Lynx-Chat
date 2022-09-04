@@ -1,41 +1,44 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  final VoidCallback showLoginPage;
+  const RegisterPage({Key? key, required this.showLoginPage}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  bool _isObscured = true;
-  void _togglePasswordView() {
-    setState(() {
-      _isObscured = !_isObscured;
-    });
-  }
-
+class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
-    
-  }
-
+  final _confirmpasswordController = TextEditingController();
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmpasswordController.dispose();
 
     super.dispose();
+  }
+
+  Future signUp() async {
+    if (passwordConfirmed()) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+    }
+  }
+
+  bool passwordConfirmed() {
+    if (_passwordController.text.trim() ==
+        _confirmpasswordController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -61,11 +64,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 10,
                   ),
                   Text(
-                    'Welcome back, you\'ve been missed! ',
+                    'Register below with your details! ',
                     style: TextStyle(fontSize: 20),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   //email textfield
                   Padding(
@@ -89,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 23,
+                    height: 10,
                   ),
                   //password
                   Padding(
@@ -104,17 +107,33 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(left: 5.0),
                         child: TextField(
                           controller: _passwordController,
-                          obscureText: _isObscured,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.password),
-                              suffixIcon: IconButton(
-                                  icon: Icon(
-                                    _isObscured
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
-                                  ),
-                                  onPressed: _togglePasswordView),
                               hintText: 'Password',
+                              border: InputBorder.none),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: TextField(
+                          controller: _confirmpasswordController,
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.password),
+                              hintText: 'Confirm password',
                               border: InputBorder.none),
                         ),
                       ),
@@ -136,17 +155,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: 25, fontWeight: FontWeight.bold),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
-                    onPressed: signIn,
-                    child: Text('Sign In'),
+                    onPressed: signUp,
+                    child: Text('Sign Up'),
                   ),
                   SizedBox(
                     height: 25,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
-                        'Not a member?',
+                        'Already a member?',
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -155,12 +174,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         width: 5,
                       ),
-                      Text(
-                        'Register Now',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
+                      GestureDetector(
+                        onTap: widget.showLoginPage,
+                        child: Text(
+                          'Login now',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue),
+                        ),
                       )
                     ],
                   )
