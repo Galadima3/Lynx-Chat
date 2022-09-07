@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'forgot_password_page.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback showRegisterPage;
@@ -28,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
     );
-
   }
 
   @override
@@ -68,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 50,
                   ),
+
                   //email textfield
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -92,7 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 23,
                   ),
-                  //password
+
+                  //password textfield
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Container(
@@ -122,13 +124,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 5,
                   ),
 
-                  //padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return ForgotPasswordPage();
 
+                              },));
+                            },
+                            child: Text(
+                              'Forgot Password',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                            )),
+
+                      ],
+                    ),
+                  ),
                   //signin button
-
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         fixedSize: Size(300, 69),
