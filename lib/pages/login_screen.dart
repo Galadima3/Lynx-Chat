@@ -7,7 +7,7 @@ import 'forgot_password_page.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback showRegisterPage;
-  LoginScreen({Key? key, required this.showRegisterPage}) : super(key: key);
+  const LoginScreen({Key? key, required this.showRegisterPage}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();

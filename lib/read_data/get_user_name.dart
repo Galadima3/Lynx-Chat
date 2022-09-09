@@ -1,10 +1,12 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class GetUserName extends StatelessWidget {
   final String documentID;
 
-  const GetUserName({Key, key, required this.documentID}) : super(key: key);
+  const GetUserName({key, required this.documentID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class GetUserName extends StatelessWidget {
       builder: (context, snapshot){
       if(snapshot.connectionState == ConnectionState.done){
         Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-        return Text( '${data['first name']}' + ' ${data['last name']},'+ ' ${data['age']}');
+        return Text( '${data['first name']} ${data['last name']}, ${data['age']}');
       } return Text('Loading');
     }
       ,);

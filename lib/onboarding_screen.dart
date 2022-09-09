@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lynx/intro_screens/intro_screen1.dart';
 import 'package:lynx/intro_screens/intro_screen2.dart';
 import 'package:lynx/intro_screens/intro_screen3.dart';
-import 'package:lynx/pages/login_screen.dart';
+
 import 'package:lynx/auth/main_page.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

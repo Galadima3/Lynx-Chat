@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +24,11 @@ class _HomePageState extends State<HomePage> {
   Future getDocID() async {
     await FirebaseFirestore.instance
         .collection('users')
+        .orderBy('age', descending: true)
         .get()
+        // ignore: avoid_function_literals_in_foreach_calls
         .then((snapshot) => snapshot.docs.forEach((document) {
-              print(document.reference);
+              log(document.reference as String);
               docIDs.add(document.reference.id);
             }));
   }
@@ -43,9 +47,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           actions: [
-           IconButton(onPressed: (){
-             FirebaseAuth.instance.signOut();
-           }, icon: Icon(Icons.logout))
+            IconButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                },
+                icon: Icon(Icons.logout))
           ],
         ),
         body: Center(
@@ -55,7 +61,6 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 15,
               ),
-
               Expanded(
                   child: FutureBuilder(
                 future: getDocID(),
