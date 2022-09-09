@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lynx/read_data/get_user_name.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,36 +15,69 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser!;
 
+  //document ID
+  List<String> docIDs = [];
+
+  //getting document IDs
+  Future getDocID() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((document) {
+              print(document.reference);
+              docIDs.add(document.reference.id);
+            }));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Successful Login: ' + user.email!,
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: Text(
+            user.email!,
+            style: TextStyle(
+              color: Colors.white,
             ),
-            SizedBox(
-              height: 15,
-            ),
-            MaterialButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              color: Colors.blue,
-              child: Text(
-                'Sign Out',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-            )
+          ),
+          actions: [
+           IconButton(onPressed: (){
+             FirebaseAuth.instance.signOut();
+           }, icon: Icon(Icons.logout))
           ],
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+
+              Expanded(
+                  child: FutureBuilder(
+                future: getDocID(),
+                builder: (context, snapshot) {
+                  return ListView.builder(
+                    itemCount: docIDs.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          tileColor: Colors.grey.shade200,
+                          title: GetUserName(
+                            documentID: docIDs[index],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ))
+            ],
+          ),
         ),
       ),
     );
