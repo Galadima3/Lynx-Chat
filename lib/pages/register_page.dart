@@ -235,8 +235,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        fixedSize: Size(300, 69),
-                        primary: Colors.blue,
+                        fixedSize: Size(300, 69), backgroundColor: Colors.blue,
                         textStyle: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                         shape: RoundedRectangleBorder(

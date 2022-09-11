@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:developer';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,15 +23,15 @@ class _HomePageState extends State<HomePage> {
   //getting document IDs
   Future getDocID() async {
     await FirebaseFirestore.instance
-        .collection('users')
-        .orderBy('age', descending: true)
+        .collection('users').orderBy('age', descending: false)
         .get()
-        // ignore: avoid_function_literals_in_foreach_calls
         .then((snapshot) => snapshot.docs.forEach((document) {
-              log(document.reference as String);
+              //print(document.reference);
               docIDs.add(document.reference.id);
             }));
   }
+
+
 
   @override
   Widget build(BuildContext context) {

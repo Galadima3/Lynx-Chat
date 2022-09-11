@@ -90,7 +90,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           ElevatedButton(
             style: ElevatedButton.styleFrom(
                 fixedSize: Size(200, 60),
-                primary: Colors.blue,
+                backgroundColor: Colors.blue,
                 textStyle:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 shape: RoundedRectangleBorder(

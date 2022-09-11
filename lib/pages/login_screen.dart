@@ -7,7 +7,8 @@ import 'forgot_password_page.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback showRegisterPage;
-  const LoginScreen({Key? key, required this.showRegisterPage}) : super(key: key);
+  const LoginScreen({Key? key, required this.showRegisterPage})
+      : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -25,10 +26,18 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
 
   Future signIn() async {
+    //show a loading circle
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(child: CircularProgressIndicator());
+        });
+
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
     );
+    Navigator.of(context).pop();
   }
 
   @override
@@ -133,11 +142,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
-                            onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return ForgotPasswordPage();
-
-                              },));
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return ForgotPasswordPage();
+                                },
+                              ));
                             },
                             child: Text(
                               'Forgot Password',
@@ -146,7 +156,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontWeight: FontWeight.bold,
                                   color: Colors.blue),
                             )),
-
                       ],
                     ),
                   ),
@@ -154,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         fixedSize: Size(300, 69),
-                        primary: Colors.blue,
+                        backgroundColor: Colors.blue,
                         textStyle: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                         shape: RoundedRectangleBorder(
